@@ -1,5 +1,7 @@
 package com.kastrull.particle_sim_config;
 
+import static com.kastrull.particle_sim_config.ConfigException.uncheck;
+
 import java.io.File;
 import java.util.Locale;
 import java.util.Scanner;
@@ -32,20 +34,6 @@ public class ConfigReader {
 		// Used as type alias.
 	}
 
-	public static class ConfigReadException extends RuntimeException {
-
-		private static final long serialVersionUID = 1L;
-
-		ConfigReadException(String message, Throwable cause) {
-			super(message, cause);
-		}
-	}
-
-	@FunctionalInterface
-	public interface ThrowingSupplier<T> {
-		T get() throws Exception;
-	}
-
 	public Config read(File file) {
 		return read(gulpFile(file));
 	}
@@ -63,22 +51,6 @@ public class ConfigReader {
 	private Scanner scannerOpen(File configFile) {
 		return uncheck("opening config file " + configFile.getName(),
 			() -> new Scanner(configFile));
-	}
-
-	/**
-	 * Converts (lifts) all exception to an unchecked
-	 * {@link ConfigReadException}
-	 */
-	private <T> T uncheck(
-			String presentTenseTaskDescription,
-			ThrowingSupplier<T> supplier) {
-		try {
-			return supplier.get();
-		} catch (Exception e) {
-			throw new ConfigReadException(
-				"Error when " + presentTenseTaskDescription,
-				e);
-		}
 	}
 
 	public Config read(String data) {
