@@ -34,7 +34,7 @@ ec
 t m 
 ```
 
-Variable name suffix ___x___ and ___y___ denotes double format values describing ___x___- and ___y___-components of a cartesian vector. Variable name suffix ___c___ denotes an integer format enumeration counter of some sort. 
+Variable name suffix ___x___ and ___y___ denotes double floating point numbers describing ___x___- and ___y___-components of a cartesian vector. Floating point numbers are formated with locale according to the United States. Variable name suffix ___c___ denotes an integer format enumeration counter of some sort.
 
 The data format starts with simulation area width and height are described by the doubles _0 &lt; __ax__, __ay__ &leq; 1e6_. 
 

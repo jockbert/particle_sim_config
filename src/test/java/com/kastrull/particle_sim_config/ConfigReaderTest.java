@@ -3,9 +3,27 @@ package com.kastrull.particle_sim_config;
 import static com.kastrull.particle_sim_config.Lines.lines;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+
 import org.junit.Test;
 
 public class ConfigReaderTest {
+	private static final ClassLoader CL = ConfigReaderTest.class.getClassLoader();
+	private static final File EXAMPLE_3_FILE = new File(CL.getResource("example3.conf").getFile());
+
+	private static final Config EXMAPLE_3_CONFIG = Config
+		.create()
+		.area(6, 4)
+		.particle(1, 1, 1, 1)
+		.particle(6, 3, -1, -1)
+		.expectation(0, 0)
+		.expectation(1, 0)
+		.expectation(3, 8)
+		.expectation(5, 16)
+		.expectation(7.99, 24)
+		.expectation(8.01, 32);
+
+	ConfigReader reader = ConfigReader.create();
 
 	@Test
 	public void completeExample1() {
@@ -73,7 +91,7 @@ public class ConfigReaderTest {
 			.ln("1 1 1 1")
 			.ln("6 3 -1 -1")
 			.ln()
-			.ln("4")
+			.ln("6")
 			.ln("0 0")
 			.ln("1 0")
 			.ln("3 8")
@@ -81,22 +99,21 @@ public class ConfigReaderTest {
 			.ln("7.99 24")
 			.ln("8.01 32").text;
 
-		Config expectedConfig = Config
-			.create()
-			.area(6, 4)
-			.particle(1, 1, 1, 1)
-			.particle(6, 3, -1, -1)
-			.expectation(0, 0)
-			.expectation(1, 0)
-			.expectation(3, 8)
-			.expectation(5, 16);
+		Config expectedConfig = EXMAPLE_3_CONFIG;
 
 		assertConfigRead(textToRead, expectedConfig);
 	}
 
 	private void assertConfigRead(String textToRead, Config expectedConfig) {
-		Config actualConfig = ConfigReader.create().read(textToRead);
+		Config actualConfig = reader.read(textToRead);
 
 		assertEquals(expectedConfig, actualConfig);
+	}
+
+	@Test
+	public void readFromFile() {
+		assertEquals(
+			EXMAPLE_3_CONFIG,
+			reader.read(EXAMPLE_3_FILE));
 	}
 }

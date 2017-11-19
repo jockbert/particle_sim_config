@@ -1,7 +1,10 @@
 package com.kastrull.particle_sim_config;
 
+import java.io.File;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.kastrull.particle_sim_config.Config.Expectation;
 import com.kastrull.particle_sim_config.Config.Particle;
@@ -29,11 +32,70 @@ public class ConfigReader {
 		// Used as type alias.
 	}
 
+	public static class ConfigReadException extends RuntimeException {
+
+		private static final long serialVersionUID = 1L;
+
+		ConfigReadException(String message, Throwable cause) {
+			super(message, cause);
+		}
+	}
+
+	@FunctionalInterface
+	public interface ThrowingSupplier<T> {
+		T get() throws Exception;
+	}
+
+	public Config read(File file) {
+		return read(gulpFile(file));
+	}
+
+	private String gulpFile(File file) {
+		return uncheck("reading " + file.getName(),
+			() -> {
+				try (Scanner scan = scannerOpen(file)) {
+					scan.useDelimiter("\\Z");
+					return scan.next();
+				}
+			});
+	}
+
+	private Scanner scannerOpen(File configFile) {
+		return uncheck("opening config file " + configFile.getName(),
+			() -> new Scanner(configFile));
+	}
+
+	/**
+	 * Converts (lifts) all exception to an unchecked
+	 * {@link ConfigReadException}
+	 */
+	private <T> T uncheck(
+			String presentTenseTaskDescription,
+			ThrowingSupplier<T> supplier) {
+		try {
+			return supplier.get();
+		} catch (Exception e) {
+			throw new ConfigReadException(
+				"Error when " + presentTenseTaskDescription,
+				e);
+		}
+	}
+
 	public Config read(String data) {
 		String cleanData = stripComments(data);
-		Scanner scanner = new Scanner(cleanData);
+
+		Scanner scanner = withLocale(Locale.US,
+			() -> new Scanner(cleanData));
 
 		return readConfig().apply(scanner);
+	}
+
+	private <T> T withLocale(Locale tempLocale, Supplier<T> s) {
+		Locale oldLocale = Locale.getDefault();
+		Locale.setDefault(tempLocale);
+		T result = s.get();
+		Locale.setDefault(oldLocale);
+		return result;
 	}
 
 	private WithScanner<Config> readConfig() {
