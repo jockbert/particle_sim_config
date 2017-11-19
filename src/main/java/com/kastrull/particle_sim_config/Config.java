@@ -6,8 +6,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * <p>
+ * Data class representing a particle simulation configuration.
+ * </p>
+ * <p>
+ * Some effort is put in to be able to use a builder-like pattern for creating a
+ * configuration. A configuration equals other configurations with the same
+ * data.
+ * </p>
+ */
 public final class Config {
 
+	/** A Cartesian vector with the two components <i>x</i> and <i>y</i>. */
 	static public class Vector {
 		public static final Vector ZERO = new Vector(0, 0);
 
@@ -47,6 +58,7 @@ public final class Config {
 		}
 	}
 
+	/** A particle with a position and a velocity. */
 	static public class Particle {
 		public static final Particle ZERO = new Particle(Vector.ZERO, Vector.ZERO);
 
@@ -87,6 +99,7 @@ public final class Config {
 		}
 	}
 
+	/** Expected simulation wall momentum result at given time units. */
 	static public class Expectation {
 		public static final Expectation ZERO = new Expectation(0, 0);
 
