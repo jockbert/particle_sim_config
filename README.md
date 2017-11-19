@@ -1,5 +1,5 @@
 
-This project is both a particle simulation data exchange format and a reference library implementation.
+This project is both a particle simulation data exchange format definition and a reference library implementation.
 
 # The data format definition
 
@@ -34,6 +34,8 @@ If a collision occurs at time ___t___, the momentum is defined to have been tran
 Everything in between characters _'<'_ and _'>_ can be regarded as comments and is not them self allowed within a comment. All numeric values are separated by some whitespace and/or comments.
 
 # Some simulations examples
+The examples can also be found in folder [src/main/resources/](src/main/resources/)
+
 _File 1:_
 ```
 < One particle with horizontal velocity > 
