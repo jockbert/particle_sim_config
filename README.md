@@ -3,7 +3,7 @@
 
 This project is both a particle simulation data exchange format definition and a reference library implementation.
 
-# How to use library in gradle
+# How to use the library
 
 Add the following to your _gradle.build_ file:
 
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.github.jockbert:particle_sim_config:0.+'
+	compile 'com.github.jockbert:particle_sim_config:1.+'
 }
 ```
 
@@ -30,11 +30,11 @@ pc
 px py vx vy
 
 < Expected or calculated simulation wall momentum value m at time t >
-ec
+rc
 t m 
 ```
 
-Variable name suffix ___x___ and ___y___ denotes double floating point numbers describing ___x___- and ___y___-components of a cartesian vector. Floating point numbers are formated with locale according to the United States. Variable name suffix ___c___ denotes an integer format enumeration counter of some sort.
+Variable name suffix ___x___ and ___y___ denotes double floating point numbers describing ___x___- and ___y___-components of a cartesian vector. Floating point numbers are formated with United States locale. Variable name suffix ___c___ denotes an integer format enumeration counter of some sort.
 
 The data format starts with simulation area width and height are described by the doubles _0 &lt; __ax__, __ay__ &leq; 1e6_. 
 
@@ -44,13 +44,13 @@ All particles are assumed to have mass 1 unit and radius 1. No overlapp is allow
 
 The particle initial position is relative one of the corners of the simulation area so that _1 &leq; __px__ &leq; (__ax__ -1)_ and _1 &leq; __py__ &leq; (__ay__ -1)_. Particles initial velocity has the restriction _-1e4 &leq; __vx__, __vy__ &leq; 1e4_
 
-After particle data, an integer _0 &leq; __ec__ &leq; 1e_ denotes a number of expected or in sumulation calculated momentums m transfered from particles to simulation area walls at a given  time _t_. Both _m_ and _t_ are doubles _&geq; 0_.
+After particle data, an integer _0 &leq; __rc__ &leq; 1e_ denotes a number of expected or in sumulation calculated momentum results ___m___ transfered from particles to simulation area walls at a given  time _t_. Both _m_ and _t_ are doubles _&geq; 0_.
 
 If a collision occurs at time ___t___, the momentum is defined to have been transfered and velocities have changed at that given time.
 
 Everything in between characters _'<'_ and _'>_ can be regarded as comments and is not them self allowed within a comment. All numeric values are separated by some whitespace and/or comments.
 
-# Some simulations examples
+# Some simulation configuration examples
 The examples can also be found in folder [src/main/resources/](src/main/resources/)
 
 _File 1:_
