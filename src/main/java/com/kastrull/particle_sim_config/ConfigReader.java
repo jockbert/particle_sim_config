@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.kastrull.particle_sim_config.Config.Expectation;
+import com.kastrull.particle_sim_config.Config.Result;
 import com.kastrull.particle_sim_config.Config.Particle;
 import com.kastrull.particle_sim_config.Config.Vector;
 
@@ -76,10 +76,10 @@ public class ConfigReader {
 
 			ConfigFn readParticles = readSeries(c -> c.particle(readParticle(scanner))).apply(scanner);
 
-			ConfigFn readExpectations = readSeries(c -> c.expectation(readExpectation(scanner))).apply(scanner);
+			ConfigFn readResults = readSeries(c -> c.result(readResult(scanner))).apply(scanner);
 
 			return readParticles
-				.andThen(readExpectations)
+				.andThen(readResults)
 				.apply(config);
 		};
 	}
@@ -90,8 +90,8 @@ public class ConfigReader {
 			.velocity(readVector(scanner));
 	}
 
-	private Expectation readExpectation(Scanner scanner) {
-		return Expectation.ZERO
+	private Result readResult(Scanner scanner) {
+		return Result.ZERO
 			.time(readDouble(scanner))
 			.momentum(readDouble(scanner));
 	}

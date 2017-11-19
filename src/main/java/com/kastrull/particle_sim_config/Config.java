@@ -99,24 +99,24 @@ public final class Config {
 		}
 	}
 
-	/** Expected simulation wall momentum result at given time units. */
-	static public class Expectation {
-		public static final Expectation ZERO = new Expectation(0, 0);
+	/** Expected or calculated simulation wall momentum at given time. */
+	static public class Result {
+		public static final Result ZERO = new Result(0, 0);
 
 		final public double time;
 		final public double momentum;
 
-		private Expectation(double time, double momentum) {
+		private Result(double time, double momentum) {
 			this.time = time;
 			this.momentum = momentum;
 		}
 
-		public Expectation time(double t) {
-			return new Expectation(t, momentum);
+		public Result time(double t) {
+			return new Result(t, momentum);
 		}
 
-		public Expectation momentum(double m) {
-			return new Expectation(time, m);
+		public Result momentum(double m) {
+			return new Result(time, m);
 		}
 
 		@Override
@@ -131,39 +131,39 @@ public final class Config {
 			if (obj == null || getClass() != obj.getClass())
 				return false;
 
-			Expectation o = (Expectation) obj;
+			Result o = (Result) obj;
 			return Objects.equals(time, o.time) &&
 					Objects.equals(momentum, o.momentum);
 		}
 
 		@Override
 		public String toString() {
-			return "Expectation(" + time + ", " + momentum + ")";
+			return "Result(" + time + ", " + momentum + ")";
 		}
 	}
 
 	public final Vector area;
 	public final List<Particle> particles;
-	public final List<Expectation> expectations;
+	public final List<Result> results;
 
 	private Config() {
-		this.area = null;
+		this.area = Vector.ZERO;
 		this.particles = Arrays.asList();
-		this.expectations = Arrays.asList();
+		this.results = Arrays.asList();
 	}
 
-	private Config(Vector area, List<Particle> particles, List<Expectation> expectations) {
+	private Config(Vector area, List<Particle> particles, List<Result> results) {
 		this.area = area;
 		this.particles = particles;
-		this.expectations = expectations;
+		this.results = results;
 	}
 
 	public static Config create() {
 		return new Config();
 	}
 
-	public static Config create(Vector area, List<Particle> particles, List<Expectation> expectations) {
-		return new Config(area, particles, expectations);
+	public static Config create(Vector area, List<Particle> particles, List<Result> results) {
+		return new Config(area, particles, results);
 	}
 
 	public static Vector v(double x, double y) {
@@ -174,12 +174,12 @@ public final class Config {
 		return new Particle(position, velocity);
 	}
 
-	public static Expectation e(double time, double momentum) {
-		return new Expectation(time, momentum);
+	public static Result r(double time, double momentum) {
+		return new Result(time, momentum);
 	}
 
 	public Config area(Vector a) {
-		return create(a, particles, expectations);
+		return create(a, particles, results);
 	}
 
 	public Config area(double ax, double ay) {
@@ -187,7 +187,7 @@ public final class Config {
 	}
 
 	public Config particle(Particle p) {
-		return create(area, add(particles, p), expectations);
+		return create(area, add(particles, p), results);
 	}
 
 	public Config particle(Vector position, Vector velocity) {
@@ -198,12 +198,12 @@ public final class Config {
 		return particle(v(px, py), v(vx, vy));
 	}
 
-	public Config expectation(Expectation e) {
-		return create(area, particles, add(expectations, e));
+	public Config result(Result e) {
+		return create(area, particles, add(results, e));
 	}
 
-	public Config expectation(double time, double momentum) {
-		return expectation(e(time, momentum));
+	public Config result(double time, double momentum) {
+		return result(r(time, momentum));
 	}
 
 	private <X> List<X> add(List<X> list, X x) {
@@ -214,7 +214,7 @@ public final class Config {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(area, particles, expectations);
+		return Objects.hash(area, particles, results);
 	}
 
 	@Override
@@ -225,11 +225,11 @@ public final class Config {
 		Config o = (Config) obj;
 		return Objects.equals(area, o.area) &&
 				Objects.equals(particles, o.particles) &&
-				Objects.equals(expectations, o.expectations);
+				Objects.equals(results, o.results);
 	}
 
 	@Override
 	public String toString() {
-		return "Config(" + area + ", " + particles + ", " + expectations + ")";
+		return "Config(" + area + ", " + particles + ", " + results + ")";
 	}
 }

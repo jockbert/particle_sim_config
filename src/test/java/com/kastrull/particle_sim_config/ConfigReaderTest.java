@@ -16,12 +16,12 @@ public class ConfigReaderTest {
 		.area(6, 4)
 		.particle(1, 1, 1, 1)
 		.particle(6, 3, -1, -1)
-		.expectation(0, 0)
-		.expectation(1, 0)
-		.expectation(3, 8)
-		.expectation(5, 16)
-		.expectation(7.99, 24)
-		.expectation(8.01, 32);
+		.result(0, 0)
+		.result(1, 0)
+		.result(3, 8)
+		.result(5, 16)
+		.result(7.99, 24)
+		.result(8.01, 32);
 
 	ConfigReader reader = ConfigReader.create();
 
@@ -42,9 +42,9 @@ public class ConfigReaderTest {
 			.create()
 			.area(4, 4)
 			.particle(2, 2, 1, 0)
-			.expectation(0, 0)
-			.expectation(4, 4)
-			.expectation(5, 6);
+			.result(0, 0)
+			.result(4, 4)
+			.result(5, 6);
 
 		assertConfigRead(textToRead, expectedConfig);
 	}
@@ -73,8 +73,8 @@ public class ConfigReaderTest {
 			.particle(5, 2, 0, 4)
 			.particle(7, 2, 0, -4)
 			.particle(9, 2, 0, -4)
-			.expectation(1, 20)
-			.expectation(2, 40);
+			.result(1, 20)
+			.result(2, 40);
 
 		assertConfigRead(textToRead, expectedConfig);
 	}
