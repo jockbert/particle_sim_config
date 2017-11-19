@@ -7,30 +7,47 @@ import com.kastrull.particle_sim_config.Config.Expectation;
 import com.kastrull.particle_sim_config.Config.Particle;
 import com.kastrull.particle_sim_config.Config.Vector;
 
+/**
+ * Particle simulation configuration reader. Returns a {@link Config} given some
+ * text input.
+ */
 public class ConfigReader {
 
 	public static ConfigReader create() {
 		return new ConfigReader();
 	}
 
-	interface ConfigFn extends Function<Config, Config> {
+	private interface Fn<A, B> extends Function<A, B> {
+		// Used as type alias.
+	}
 
+	private interface ConfigFn extends Fn<Config, Config> {
+		// Used as type alias.
+	}
+
+	private interface WithScanner<X> extends Fn<Scanner, X> {
+		// Used as type alias.
 	}
 
 	public Config read(String data) {
+		String cleanData = stripComments(data);
+		Scanner scanner = new Scanner(cleanData);
 
-		Scanner scanner = new Scanner(noComments(data));
+		return readConfig().apply(scanner);
+	}
 
-		ConfigFn readArea = conf -> conf.area(readVector(scanner));
+	private WithScanner<Config> readConfig() {
+		return scanner -> {
+			Config config = Config.create().area(readVector(scanner));
 
-		ConfigFn readParticles = readSeries(scanner, c -> c.particle(readParticle(scanner)));
+			ConfigFn readParticles = readSeries(c -> c.particle(readParticle(scanner))).apply(scanner);
 
-		ConfigFn readExpectations = readSeries(scanner, c -> c.expectation(readExpectation(scanner)));
+			ConfigFn readExpectations = readSeries(c -> c.expectation(readExpectation(scanner))).apply(scanner);
 
-		return readArea
-			.andThen(readParticles)
-			.andThen(readExpectations)
-			.apply(Config.create());
+			return readParticles
+				.andThen(readExpectations)
+				.apply(config);
+		};
 	}
 
 	private Particle readParticle(Scanner scanner) {
@@ -45,16 +62,15 @@ public class ConfigReader {
 			.momentum(readDouble(scanner));
 	}
 
-	private ConfigFn readSeries(
-			Scanner scanner,
-			Function<Config, Config> fn) {
+	private Fn<Scanner, ConfigFn> readSeries(
+			ConfigFn fn) {
 
-		return conf -> {
+		return scanner -> config -> {
 			int n = readInt(scanner);
 			for (int i = 0; i < n; i++) {
-				conf = fn.apply(conf);
+				config = fn.apply(config);
 			}
-			return conf;
+			return config;
 		};
 	}
 
@@ -72,8 +88,7 @@ public class ConfigReader {
 		return scanner.nextInt();
 	}
 
-	private String noComments(String data) {
+	private String stripComments(String data) {
 		return data.replaceAll("<[^<>]*>", " ");
 	}
-
 }
