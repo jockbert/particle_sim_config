@@ -1,5 +1,22 @@
 
+[![](https://jitpack.io/v/jockbert/particle_sim_config.svg)](https://jitpack.io/#jockbert/particle_sim_config)
+
 This project is both a particle simulation data exchange format definition and a reference library implementation.
+
+# How to use library in gradle
+
+Add the following to your _gradle.build_ file:
+
+```
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+	compile 'com.github.jockbert:particle_sim_config:0.+'
+}
+```
+
 
 # The data format definition
 
