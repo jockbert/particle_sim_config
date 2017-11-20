@@ -28,15 +28,15 @@ public class ConfigReaderTest {
 	@Test
 	public void completeExample1() {
 
-		String textToRead = lines()
-			.ln("\" One particle with horizontal velocity \"")
-			.ln("4 4 1")
-			.ln("2 2 1 0")
-			.ln()
-			.ln("3")
-			.ln("0 0")
-			.ln("4 4")
-			.ln("5 6").text;
+		String textToRead = lines(
+			"\" One particle with horizontal velocity \"",
+			"4 4 1",
+			"2 2 1 0",
+			"",
+			"3",
+			"0 0",
+			"4 4",
+			"5 6");
 
 		Config expectedConfig = Config
 			.create()
@@ -52,18 +52,18 @@ public class ConfigReaderTest {
 	@Test
 	public void completeExample2() {
 
-		String textToRead = lines()
-			.ln("\" 5 touching particles with vertical velocity \"")
-			.ln("10 4 5")
-			.ln("1 2 0 4")
-			.ln("3 2 0 4")
-			.ln("5 2 0 4")
-			.ln("7 2 0 -4")
-			.ln("9 2 0 -4")
-			.ln()
-			.ln("2")
-			.ln("1 20")
-			.ln("2 40").text;
+		String textToRead = lines(
+			"\" 5 touching particles with vertical velocity \"",
+			"10 4 5",
+			"1 2 0 4",
+			"3 2 0 4",
+			"5 2 0 4",
+			"7 2 0 -4",
+			"9 2 0 -4",
+			"",
+			"2",
+			"1 20",
+			"2 40");
 
 		Config expectedConfig = Config
 			.create()
@@ -82,22 +82,22 @@ public class ConfigReaderTest {
 	@Test
 	public void completeExample3() {
 
-		String textToRead = lines()
-			.ln("\" diagonal paricles with both")
-			.ln("corner collisions and particle ")
-			.ln("collisions \"")
-			.ln()
-			.ln("6 4 2")
-			.ln("1 1 1 1")
-			.ln("6 3 -1 -1")
-			.ln()
-			.ln("6")
-			.ln("0 0")
-			.ln("1 0")
-			.ln("3 8")
-			.ln("5 16")
-			.ln("7.99 24")
-			.ln("8.01 32").text;
+		String textToRead = lines(
+			"\" diagonal paricles with both",
+			"corner collisions and particle ",
+			"collisions \"",
+			"",
+			"6 4 2",
+			"1 1 1 1",
+			"6 3 -1 -1",
+			"",
+			"6",
+			"0 0",
+			"1 0",
+			"3 8",
+			"5 16",
+			"7.99 24",
+			"8.01 32");
 
 		Config expectedConfig = EXMAPLE_3_CONFIG;
 
