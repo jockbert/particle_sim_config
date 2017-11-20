@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.github.jockbert:particle_sim_config:1.+'
+	compile 'com.github.jockbert:particle_sim_config:+'
 }
 ```
 
