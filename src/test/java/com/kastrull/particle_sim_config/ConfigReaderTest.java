@@ -29,7 +29,7 @@ public class ConfigReaderTest {
 	public void completeExample1() {
 
 		String textToRead = lines()
-			.ln("< One particle with horizontal velocity >")
+			.ln("\" One particle with horizontal velocity \"")
 			.ln("4 4 1")
 			.ln("2 2 1 0")
 			.ln()
@@ -53,7 +53,7 @@ public class ConfigReaderTest {
 	public void completeExample2() {
 
 		String textToRead = lines()
-			.ln("< 5 touching particles with vertical velocity >")
+			.ln("\" 5 touching particles with vertical velocity \"")
 			.ln("10 4 5")
 			.ln("1 2 0 4")
 			.ln("3 2 0 4")
@@ -83,9 +83,9 @@ public class ConfigReaderTest {
 	public void completeExample3() {
 
 		String textToRead = lines()
-			.ln("< diagonal paricles with both")
+			.ln("\" diagonal paricles with both")
 			.ln("corner collisions and particle ")
-			.ln("collisions >")
+			.ln("collisions \"")
 			.ln()
 			.ln("6 4 2")
 			.ln("1 1 1 1")

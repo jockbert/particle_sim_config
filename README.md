@@ -21,15 +21,15 @@ dependencies {
 # The data format definition
 
 ```
-< Simulation area size (ax,ay) >
+" Simulation area size (ax,ay) "
 ax ay
 
-< A series of pc number of particles with 
-position (px,py) and velocity (vx, vy) >
+" A series of pc number of particles with
+position (px,py) and velocity (vx, vy) "
 pc
 px py vx vy
 
-< Expected or calculated simulation wall momentum value m at time t >
+" Expected or calculated simulation wall momentum value m at time t "
 rc
 t m 
 ```
@@ -48,14 +48,14 @@ After particle data, an integer _0 &leq; __rc__ &leq; 1e_ denotes a number of ex
 
 If a collision occurs at time ___t___, the momentum is defined to have been transfered and velocities have changed at that given time.
 
-Everything in between characters _'<'_ and _'>_ can be regarded as comments and is not them self allowed within a comment. All numeric values are separated by some whitespace and/or comments.
+Everything in between two quotation marks (_"_) is regarded as comment. All numeric values must be separated by some whitespace and/or comment.
 
 # Some simulation configuration examples
 The examples can also be found in folder [src/main/resources/](src/main/resources/)
 
 _File 1:_
 ```
-< One particle with horizontal velocity > 
+" One particle with horizontal velocity "
 4 4 1
 2 2 1 0
 
@@ -67,7 +67,7 @@ _File 1:_
 
 _File 2:_
 ```
-< 5 touching particles with vertical velocity >
+" 5 touching particles with vertical velocity "
 10 4 5
 1 2 0 4
 3 2 0 4
@@ -82,9 +82,9 @@ _File 2:_
 
 _File 3:_
 ```
-< diagonal paricles with both 
-corner collisions and particle 
-collisions >
+" diagonal paricles with both
+corner collisions and particle
+collisions "
 
 6 4 2
 1 1 1 1

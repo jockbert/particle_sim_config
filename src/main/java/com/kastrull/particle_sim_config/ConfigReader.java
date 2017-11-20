@@ -8,8 +8,8 @@ import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.kastrull.particle_sim_config.Config.Result;
 import com.kastrull.particle_sim_config.Config.Particle;
+import com.kastrull.particle_sim_config.Config.Result;
 import com.kastrull.particle_sim_config.Config.Vector;
 
 /**
@@ -123,6 +123,6 @@ public class ConfigReader {
 	}
 
 	private String stripComments(String data) {
-		return data.replaceAll("<[^<>]*>", " ");
+		return data.replaceAll("(?s)\".*?\"", " ");
 	}
 }
