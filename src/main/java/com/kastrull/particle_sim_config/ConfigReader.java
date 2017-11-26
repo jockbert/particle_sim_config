@@ -34,6 +34,7 @@ public class ConfigReader {
 		// Used as type alias.
 	}
 
+	/** Open and read configuration content from a file. */
 	public Config read(File file) {
 		return read(gulpFile(file));
 	}
@@ -53,6 +54,7 @@ public class ConfigReader {
 			() -> new Scanner(configFile));
 	}
 
+	/** Read (parse) given string as a simulation configuration. */
 	public Config read(String data) {
 		String cleanData = stripComments(data);
 
